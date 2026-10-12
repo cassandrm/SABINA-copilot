@@ -1,0 +1,37 @@
+mcs.metadata:
+  componentName: Ricomincia
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    displayName: Ricomincia
+    includeInOnSelectIntent: false
+    triggerQueries:
+      - cominciamo di nuovo
+      - ricominciamo
+      - iniziamo di nuovo
+      - inizia di nuovo
+
+  actions:
+    - kind: Question
+      id: question_zguoVV
+      alwaysPrompt: false
+      variable: init:Topic.Confirm
+      prompt: Riavviare la conversazione?
+      entity: BooleanPrebuiltEntity
+
+    - kind: ConditionGroup
+      id: conditionGroup_lvx2zV
+      conditions:
+        - id: conditionItem_sVQtHa
+          condition: =Topic.Confirm = true
+          actions:
+            - kind: BeginDialog
+              id: 0YKYsy
+              dialog: hkt_AttestazioniAgent.topic.ResetConversation
+
+      elseActions:
+        - kind: SendActivity
+          id: sendMessage_lk2CyQ
+          activity: Ok. Andiamo avanti.

@@ -1,0 +1,42 @@
+mcs.metadata:
+  componentName: A presto
+  description: Questo argomento si attiva quando l'utente pronuncia la formula di saluto finale. Per impostazione predefinita, la conversazione non finisce. Se vuoi terminare la conversazione quando l'utente pronuncia la formula di saluto finale, puoi aggiungere un'azione "Fine della conversazione" all'argomento o reindirizzare all'argomento di sistema "Fine della conversazione".
+kind: AdaptiveDialog
+startBehavior: CancelOtherTopics
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    displayName: A presto
+    includeInOnSelectIntent: false
+    triggerQueries:
+      - A presto
+      - Ciao per ora
+      - Ciao adesso
+      - Arrivederci
+      - No, grazie. Arrivederci.
+      - A più tardi
+
+  actions:
+    - kind: Question
+      id: question_zf2HhP
+      variable: Topic.EndConversation
+      prompt: Vuoi terminare la conversazione?
+      entity: BooleanPrebuiltEntity
+
+    - kind: ConditionGroup
+      id: condition_DGc1Wy
+      conditions:
+        - id: condition_DGc1Wy-item-0
+          condition: =Topic.EndConversation = true
+          actions:
+            - kind: BeginDialog
+              id: dn94DC
+              dialog: hkt_AttestazioniAgent.topic.EndofConversation
+
+        - id: condition_DGc1Wy-item-1
+          condition: =Topic.EndConversation = false
+          actions:
+            - kind: SendActivity
+              id: sendMessage_LdLhmf
+              activity: Continua. Sono in attesa.

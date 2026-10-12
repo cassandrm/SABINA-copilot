@@ -1,0 +1,19 @@
+mcs.metadata:
+  componentName: Grazie
+  description: Questo argomento si attiva quando l'utente ringrazia.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    displayName: Grazie
+    includeInOnSelectIntent: false
+    triggerQueries:
+      - ti ringrazio
+      - grazie
+      - grazie mille
+
+  actions:
+    - kind: SendActivity
+      id: sendMessage_9iz6v7
+      activity: Ti diamo il benvenuto.

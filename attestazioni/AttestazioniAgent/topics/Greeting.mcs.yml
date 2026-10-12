@@ -1,0 +1,27 @@
+mcs.metadata:
+  componentName: Salve
+  description: Questo argomento si attiva quando l'utente pronuncia la formula di saluto iniziale all'agente.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    displayName: Salve
+    includeInOnSelectIntent: false
+    triggerQueries:
+      - Buon pomeriggio
+      - Buongiorno
+      - Ciao
+      - Ehi
+
+  actions:
+    - kind: SendActivity
+      id: sendMessage_abmysR
+      activity:
+        text:
+          - Ciao, come posso aiutarti oggi?
+        speak:
+          - Ciao, sono <break strength="medium" />, come posso aiutarti?
+
+    - kind: CancelAllDialogs
+      id: cancelAllDialogs_01At22

@@ -1,0 +1,24 @@
+mcs.metadata:
+  componentName: SalvaAttestazioneSuDataverse
+kind: TaskDialog
+modelDisplayName: Salva Attestazione su Dataverse
+modelDescription: Invia il JSON estratto dall'attestazione a un flusso Power Automate che lo salva su Dataverse. Restituisce un messaggio di esito dell'operazione.
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: JsonAttestazione
+    description: Il JSON contenente i dati strutturati estratti dall'attestazione (dati anagrafici, certificazioni e data di scadenza)
+    entity: StringPrebuiltEntity
+    shouldPromptUser: false
+
+outputs:
+  - propertyName: Esito
+    description: Messaggio di successo o errore restituito dal flusso Power Automate
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: hkt_SalvaAttestazioneSuDataverse_cr
+  connectionProperties:
+    mode: Maker
+  operationId: DynamicInvoke
+
+outputMode: All

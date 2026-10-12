@@ -1,0 +1,22 @@
+mcs.metadata:
+  componentName: "Accedi "
+  description: Questo argomento di sistema si attiva quando l'agente deve concedere l'accesso all'utente o richiedere all'utente di effettuare l'accesso
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnSignIn
+  id: main
+  actions:
+    - kind: ConditionGroup
+      id: conditionGroup_ypjGKL
+      conditions:
+        - id: conditionItem_7XYIIR
+          condition: =System.SignInReason = SignInReason.SignInRequired
+          actions:
+            - kind: SendActivity
+              id: sendMessage_1jHUNO
+              activity: Ciao! Per poterti aiutare, ho bisogno che tu effettui l'accesso.
+
+    - kind: OAuthInput
+      id: gOjhZA
+      title: Accesso
+      text: Per continuare, effettua l'accesso

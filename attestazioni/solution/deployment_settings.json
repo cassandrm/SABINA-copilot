@@ -1,0 +1,10 @@
+{
+  "EnvironmentVariables": [],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "hkt_DataverseAttestazioniConn",
+      "ConnectionId": "05d3d6b8af4c42eaac7826f104a3c4bf",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    }
+  ]
+}

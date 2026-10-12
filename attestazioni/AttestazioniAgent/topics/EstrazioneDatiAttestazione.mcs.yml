@@ -1,0 +1,76 @@
+mcs.metadata:
+  componentName: Estrazione Dati Attestazione
+  description: Estrae dati anagrafici, certificazioni (coppie categoria/classificazione) e data di scadenza da un'attestazione fornita dall'utente.
+kind: AdaptiveDialog
+modelDescription: Estrae dati anagrafici, certificazioni (coppie categoria/classificazione) e data di scadenza da un'attestazione fornita dall'utente
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: TestoAttestazione
+    description: Il testo completo dell'attestazione da analizzare
+    entity: StringPrebuiltEntity
+    shouldPromptUser: true
+inputType:
+  properties:
+    TestoAttestazione:
+      displayName: TestoAttestazione
+      description: Il testo completo dell'attestazione da analizzare
+      type: String
+outputType:
+  properties:
+    RisultatoEstrazione:
+      displayName: RisultatoEstrazione
+      description: Dati estratti dall'attestazione inclusi dati anagrafici, certificazioni (coppie categoria/classificazione) e data di scadenza
+      type: String
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    triggerQueries:
+      - estrai dati dall'attestazione
+      - analizza attestazione
+      - leggi attestazione
+      - dati dell'attestazione
+      - estrarre informazioni attestazione
+  actions:
+    - kind: SearchAndSummarizeContent
+      id: searchAndSummarize_kP3mR7xN
+      userInput: =Topic.TestoAttestazione
+      variable: Topic.RisultatoEstrazione
+      autoSend: false
+      additionalInstructions: |
+        Analizza il testo dell'attestazione fornita ed estrai le informazioni richieste. Restituisci ESCLUSIVAMENTE un blocco JSON valido, senza testo aggiuntivo prima o dopo.
+
+        Il JSON deve avere esattamente queste chiavi di primo livello:
+        - "dati_anagrafici": oggetto con esattamente questi 8 sottocampi: denominazione (ragione sociale o nome dell'impresa), codice_fiscale (codice fiscale del titolare o dell'impresa), partita_iva (partita IVA), sede (comune della sede legale), cap (codice di avviamento postale), provincia (sigla della provincia), indirizzo (via e numero civico della sede), rappresentante_legale (nome e cognome del rappresentante legale)
+        - "certificazioni": array di oggetti; ogni oggetto rappresenta una coppia e ha esattamente due campi — "categoria" (stringa) e "classificazione" (stringa); non usare array separati per categoria e classificazione
+        - "data_scadenza": stringa in formato ISO 8601, es. "2026-12-31"
+
+        Regole importanti:
+        - certificazioni è SEMPRE un array di oggetti, anche con una sola coppia; ogni oggetto ha esattamente i campi "categoria" e "classificazione".
+        - data_scadenza deve essere in formato YYYY-MM-DD; se non presente nel testo, usa null.
+        - dati_anagrafici deve contenere esattamente questi campi: denominazione, codice_fiscale, partita_iva, sede, cap, provincia, indirizzo, rappresentante_legale.
+        - Se uno dei sottocampi di dati_anagrafici manca nel testo, usa null per quel sottocampo.
+        - Se non vi sono certificazioni, usa un array vuoto per il campo certificazioni.
+        - All'interno di ogni oggetto certificazioni, usa null per i campi mancanti.
+        - Non aggiungere spiegazioni o testo fuori dal blocco JSON.
+
+    - kind: SendActivity
+      id: sendActivity_showJson
+      activity: ="Dati estratti dall'attestazione:\n\n" & Topic.RisultatoEstrazione
+
+    - kind: BeginDialog
+      id: beginDialog_sD3hK6nP
+      dialog: hkt_AttestazioniAgent.action.SalvaAttestazioneSuDataverse
+      input:
+        binding:
+          JsonAttestazione: =Topic.RisultatoEstrazione
+      output:
+        binding:
+          Esito: Topic.EsitoSalvataggio
+
+    - kind: SendActivity
+      id: sendActivity_bV9wJ2qZ
+      activity: "Ho estratto i dati dall'attestazione e li ho salvati correttamente su Dataverse."
+
+    - kind: EndDialog
+      id: endDialog_mX4sL8cY

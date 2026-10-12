@@ -1,0 +1,3 @@
+﻿connectionReferences:
+  - connectionReferenceLogicalName: hkt_SalvaAttestazioneSuDataverse_cr
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_powerautomate

@@ -1,0 +1,48 @@
+mcs.metadata:
+  componentName: In caso di errore
+  description: Questo argomento di sistema si attiva quando l'agente registra un errore. Quando si usa il riquadro della chat di prova, viene visualizzata la descrizione completa dell'errore.
+kind: AdaptiveDialog
+startBehavior: UseLatestPublishedContentAndCancelOtherTopics
+beginDialog:
+  kind: OnError
+  id: main
+  actions:
+    - kind: SetVariable
+      id: setVariable_timestamp
+      variable: init:Topic.CurrentTime
+      value: =Text(Now(), DateTimeFormat.UTC)
+
+    - kind: ConditionGroup
+      id: condition_1
+      conditions:
+        - id: bL4wmY
+          condition: =System.Conversation.InTestMode = true
+          actions:
+            - kind: SendActivity
+              id: sendMessage_XJBYMo
+              activity: |-
+                Messaggio di errore: {System.Error.Message}
+                Codice errore: {System.Error.Code}
+                ID conversazione: {System.Conversation.Id}
+                Ora (UTC): {Topic.CurrentTime}
+
+      elseActions:
+        - kind: SendActivity
+          id: sendMessage_dZ0gaF
+          activity:
+            text:
+              - |-
+                Si è verificato un errore.
+                Codice errore: {System.Error.Code}
+                ID conversazione: {System.Conversation.Id}
+                Ora (UTC): {Topic.CurrentTime}.
+            speak:
+              - Si è verificato un errore. Riprova.
+
+    - kind: LogCustomTelemetryEvent
+      id: 9KwEAn
+      eventName: OnErrorLog
+      properties: "={ErrorMessage: System.Error.Message, ErrorCode: System.Error.Code, TimeUTC: Topic.CurrentTime, ConversationId: System.Conversation.Id}"
+
+    - kind: CancelAllDialogs
+      id: NW7NyY

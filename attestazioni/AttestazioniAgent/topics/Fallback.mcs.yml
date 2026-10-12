@@ -1,0 +1,22 @@
+mcs.metadata:
+  componentName: Fallback
+  description: Questo argomento di sistema viene attivato quando l'espressione dell'utente non corrisponde ad alcun argomento esistente.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnUnknownIntent
+  id: main
+  actions:
+    - kind: ConditionGroup
+      id: conditionGroup_LktzXw
+      conditions:
+        - id: conditionItem_tlGIVo
+          condition: =System.FallbackCount < 3
+          actions:
+            - kind: SendActivity
+              id: sendMessage_QZreqo
+              activity: Mi dispiace, non so come posso aiutarti. Puoi provare a riformulare la richiesta?
+
+      elseActions:
+        - kind: BeginDialog
+          id: 5aXj5M
+          dialog: hkt_AttestazioniAgent.topic.Escalate

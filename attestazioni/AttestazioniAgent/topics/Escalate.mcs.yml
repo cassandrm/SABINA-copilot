@@ -1,0 +1,100 @@
+mcs.metadata:
+  componentName: Esegui escalation
+  description: |-
+    Questo argomento di sistema viene attivato quando l'utente indica che desidera parlare con un rappresentante.
+    Puoi configurare la modalità di gestione del passaggio dall'agente a un essere umano nelle impostazioni dell'agente.
+    Se il tuo agente non gestisce le escalation, questo argomento deve essere disabilitato.
+kind: AdaptiveDialog
+startBehavior: CancelOtherTopics
+beginDialog:
+  kind: OnEscalate
+  id: main
+  intent:
+    displayName: Esegui escalation
+    includeInOnSelectIntent: false
+    triggerQueries:
+      - Parla con un agente
+      - Fammi parlare con un agente
+      - Parlare con un agente
+      - Parla con una persona
+      - Fammi parlare con una persona
+      - Parlare con una persona
+      - Parla con qualcuno
+      - Posso parlare con qualcuno
+      - Parlare con qualcuno
+      - Richiamata
+      - Richiama
+      - Chiama il servizio clienti
+      - Chiamare il servizio clienti
+      - Chiamami per favore
+      - Chiamarmi per favore
+      - Chiama il supporto
+      - Chiamare il supporto
+      - Chiama il supporto tecnico
+      - Chiamare il supporto tecnico
+      - Un agente può chiamami
+      - Posso chiamare
+      - Posso entrare in contatto con qualcun altro
+      - Posso ottenere supporto da un agente reale
+      - Posso chiedere il supporto di un agente reale
+      - La mia chiamata può essere trasferita a una persona
+      - Puoi trasferire la mia chiamata a una persona
+      - Si può trasferire la mia chiamata a una persona
+      - Posso avere un numero da chiamare o posso essere richiamato
+      - Si può avere un numero da chiamare o posso essere richiamato
+      - Posso chiedere a un rappresentante di chiamarmi
+      - Posso prenotare una chiamata
+      - Posso parlare con un rappresentante
+      - Posso parlare con un essere umano
+      - Posso parlare con un assistente umano
+      - Posso parlare con un assistente fisico
+      - Qualcuno può chiamarmi
+      - Chatta con un essere umano
+      - Chattare con un essere umano
+      - Chatta con un rappresentante
+      - Chattare con un rappresentante
+      - Chatta con l'agente
+      - Chattare con un agente
+      - Chatta con qualcuno per favore
+      - Voglio chattare con qualcuno per favore
+      - Connettimi a un agente live
+      - Connettermi a un agente liv
+      - Connettimi a una persona
+      - Connettermi a una persona
+      - Qualcuno potrebbe contattami per telefono
+      - Agente del cliente
+      - Rappresentante del cliente
+      - Servizio clienti
+      - Ho bisogno che un responsabile mi contatti
+      - Ho bisogno di essere contattato da un responsabile
+      - Ho bisogno del servizio clienti
+      - Mi serve il servizio clienti
+      - Ho bisogno di aiuto da una persona
+      - Mi serve l'aiuto di una persona
+      - Ho bisogno di parlare con un agente live
+      - Devo parlare con un agente live
+      - Ho bisogno di parlare con uno specialista
+      - Devo parlare con uno specialista per favore
+      - Vorrei parlare con il servizio clienti
+      - Voglio parlare con il servizio clienti
+      - Vorrei continuare con il supporto live
+      - Voglio passare al supporto live
+      - Vorrei parlare con un consulente
+      - Voglio parlare con un consulente
+      - Vorrei parlare con un tecnico live
+      - Voglio parlare con un tecnico live
+      - Vorrei parlare con un addetto
+      - Voglio parlare con un addetto
+      - Vorrei parlare con un tecnico
+      - Voglio parlare con un tecnico
+      - Parla con un membro del supporto tecnico
+      - Parlare con un membro del supporto tecnico
+
+  actions:
+    - kind: SendActivity
+      id: sendMessage_s39DCt
+      conversationOutcome: Escalated
+      activity: |-
+        L'escalation a un rappresentante non è attualmente configurata per questo copilota, tuttavia qui l'agente può fornire informazioni su come entrare in contatto con qualcuno in un altro modo.
+
+        C'è altro che posso fare per te?
