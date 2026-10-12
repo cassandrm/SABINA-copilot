@@ -1,0 +1,9 @@
+.venv
+.claude
+*.json
+*.pdf
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pycache/
